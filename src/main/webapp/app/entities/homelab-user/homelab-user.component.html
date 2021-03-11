@@ -1,0 +1,87 @@
+<div>
+    <h2 id="page-heading">
+        <span jhiTranslate="homelabApp.homelabUser.home.title">Homelab Users</span>
+
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-homelab-user" [routerLink]="['/homelab-user/new']">
+            <fa-icon icon="plus"></fa-icon>
+            <span  jhiTranslate="homelabApp.homelabUser.home.createLabel">
+            Create a new Homelab User
+            </span>
+        </button>
+    </h2>
+
+    <jhi-alert-error></jhi-alert-error>
+
+    <jhi-alert></jhi-alert>
+
+    <div class="alert alert-warning" id="no-result" *ngIf="homelabUsers?.length === 0">
+        <span jhiTranslate="homelabApp.homelabUser.home.notFound">No homelabUsers found</span>
+    </div>
+
+    <div class="table-responsive" id="entities" *ngIf="homelabUsers && homelabUsers.length > 0">
+        <table class="table table-striped" aria-describedby="page-heading">
+            <thead>
+                <tr jhiSort [(predicate)]="predicate" [(ascending)]="ascending" [callback]="loadPage.bind(this)">
+                    <th scope="col"  jhiSortBy="id"><span jhiTranslate="global.field.id">ID</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="numCNI"><span jhiTranslate="homelabApp.homelabUser.numCNI">Num CNI</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="dateDeNaissance"><span jhiTranslate="homelabApp.homelabUser.dateDeNaissance">Date De Naissance</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="addressLine1"><span jhiTranslate="homelabApp.homelabUser.addressLine1">Address Line 1</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="addressLine2"><span jhiTranslate="homelabApp.homelabUser.addressLine2">Address Line 2</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="city"><span jhiTranslate="homelabApp.homelabUser.city">City</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="pays"><span jhiTranslate="homelabApp.homelabUser.pays">Pays</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="phone"><span jhiTranslate="homelabApp.homelabUser.phone">Phone</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"  jhiSortBy="userLogin"><span jhiTranslate="homelabApp.homelabUser.user">User</span> <fa-icon icon="sort"></fa-icon></th>
+                    <th scope="col"></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let homelabUser of homelabUsers ;trackBy: trackId">
+                    <td><a [routerLink]="['/homelab-user', homelabUser.id, 'view']">{{ homelabUser.id }}</a></td>
+                    <td>{{ homelabUser.numCNI }}</td>
+                    <td>{{ homelabUser.dateDeNaissance | date:'mediumDate' }}</td>
+                    <td>{{ homelabUser.addressLine1 }}</td>
+                    <td>{{ homelabUser.addressLine2 }}</td>
+                    <td>{{ homelabUser.city }}</td>
+                    <td>{{ homelabUser.pays }}</td>
+                    <td>{{ homelabUser.phone }}</td>
+                    <td>
+                        {{ homelabUser.userLogin }}
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group">
+                            <button type="submit"
+                                    [routerLink]="['/homelab-user', homelabUser.id, 'view']"
+                                    class="btn btn-info btn-sm">
+                                <fa-icon icon="eye"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                            </button>
+
+                            <button type="submit"
+                                    [routerLink]="['/homelab-user', homelabUser.id, 'edit']"
+                                    class="btn btn-primary btn-sm">
+                                <fa-icon icon="pencil-alt"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                            </button>
+
+                            <button type="submit" (click)="delete(homelabUser)"
+                                    class="btn btn-danger btn-sm">
+                                <fa-icon icon="times"></fa-icon>
+                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div *ngIf="homelabUsers && homelabUsers.length > 0">
+        <div class="row justify-content-center">
+            <jhi-item-count [page]="page" [total]="totalItems" [itemsPerPage]="itemsPerPage"></jhi-item-count>
+        </div>
+
+        <div class="row justify-content-center">
+            <ngb-pagination [collectionSize]="totalItems" [(page)]="ngbPaginationPage" [pageSize]="itemsPerPage" [maxSize]="5" [rotate]="true" [boundaryLinks]="true" (pageChange)="loadPage($event)"></ngb-pagination>
+        </div>
+    </div>
+</div>

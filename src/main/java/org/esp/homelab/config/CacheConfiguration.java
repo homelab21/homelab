@@ -49,6 +49,7 @@ public class CacheConfiguration {
             createCache(cm, org.esp.homelab.domain.User.class.getName() + ".authorities");
             createCache(cm, org.esp.homelab.domain.PersistentToken.class.getName());
             createCache(cm, org.esp.homelab.domain.User.class.getName() + ".persistentTokens");
+            createCache(cm, org.esp.homelab.domain.HomelabUser.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

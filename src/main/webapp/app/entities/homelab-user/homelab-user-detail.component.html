@@ -1,0 +1,58 @@
+<div class="row justify-content-center">
+    <div class="col-8">
+        <div *ngIf="homelabUser">
+            <h2><span jhiTranslate="homelabApp.homelabUser.detail.title">Homelab User</span> {{ homelabUser.id }}</h2>
+
+            <hr>
+
+            <jhi-alert-error></jhi-alert-error>
+
+            <dl class="row-md jh-entity-details">
+                <dt><span jhiTranslate="homelabApp.homelabUser.numCNI">Num CNI</span></dt>
+                <dd>
+                    <span>{{ homelabUser.numCNI }}</span>
+                </dd>
+                <dt><span jhiTranslate="homelabApp.homelabUser.dateDeNaissance">Date De Naissance</span></dt>
+                <dd>
+                    <span>{{ homelabUser.dateDeNaissance }}</span>
+                </dd>
+                <dt><span jhiTranslate="homelabApp.homelabUser.addressLine1">Address Line 1</span></dt>
+                <dd>
+                    <span>{{ homelabUser.addressLine1 }}</span>
+                </dd>
+                <dt><span jhiTranslate="homelabApp.homelabUser.addressLine2">Address Line 2</span></dt>
+                <dd>
+                    <span>{{ homelabUser.addressLine2 }}</span>
+                </dd>
+                <dt><span jhiTranslate="homelabApp.homelabUser.city">City</span></dt>
+                <dd>
+                    <span>{{ homelabUser.city }}</span>
+                </dd>
+                <dt><span jhiTranslate="homelabApp.homelabUser.pays">Pays</span></dt>
+                <dd>
+                    <span>{{ homelabUser.pays }}</span>
+                </dd>
+                <dt><span jhiTranslate="homelabApp.homelabUser.phone">Phone</span></dt>
+                <dd>
+                    <span>{{ homelabUser.phone }}</span>
+                </dd>
+                <dt><span jhiTranslate="homelabApp.homelabUser.user">User</span></dt>
+                <dd>
+                    {{ homelabUser.userLogin }}
+                </dd>
+            </dl>
+
+            <button type="submit"
+                    (click)="previousState()"
+                    class="btn btn-info">
+                <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+            </button>
+
+            <button type="button"
+                    [routerLink]="['/homelab-user', homelabUser.id, 'edit']"
+                    class="btn btn-primary">
+                <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+            </button>
+        </div>
+    </div>
+</div>

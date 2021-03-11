@@ -8,8 +8,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 import org.esp.homelab.config.Constants;
 import org.esp.homelab.domain.Authority;
+import org.esp.homelab.domain.HomelabUser;
 import org.esp.homelab.domain.User;
 import org.esp.homelab.repository.AuthorityRepository;
+import org.esp.homelab.repository.HomelabUserRepository;
 import org.esp.homelab.repository.PersistentTokenRepository;
 import org.esp.homelab.repository.UserRepository;
 import org.esp.homelab.security.AuthoritiesConstants;
@@ -35,6 +37,8 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    private final HomelabUserRepository homelabUserRepository;
+
     private final PasswordEncoder passwordEncoder;
 
     private final PersistentTokenRepository persistentTokenRepository;
@@ -45,12 +49,14 @@ public class UserService {
 
     public UserService(
         UserRepository userRepository,
+        HomelabUserRepository homelabUserRepository,
         PasswordEncoder passwordEncoder,
         PersistentTokenRepository persistentTokenRepository,
         AuthorityRepository authorityRepository,
         CacheManager cacheManager
     ) {
         this.userRepository = userRepository;
+        this.homelabUserRepository = homelabUserRepository;
         this.passwordEncoder = passwordEncoder;
         this.persistentTokenRepository = persistentTokenRepository;
         this.authorityRepository = authorityRepository;
@@ -103,7 +109,17 @@ public class UserService {
             );
     }
 
-    public User registerUser(UserDTO userDTO, String password) {
+    public User registerUser(
+        UserDTO userDTO,
+        String password,
+        String numCNI,
+        String phone,
+        LocalDate dateDeNaissance,
+        String addressLine1,
+        String addressLine2,
+        String city,
+        String pays
+    ) {
         userRepository
             .findOneByLogin(userDTO.getLogin().toLowerCase())
             .ifPresent(
@@ -146,6 +162,18 @@ public class UserService {
         userRepository.save(newUser);
         this.clearUserCaches(newUser);
         log.debug("Created Information for User: {}", newUser);
+
+        HomelabUser homelabUser = new HomelabUser();
+
+        homelabUser.setUser(newUser);
+        homelabUser.setNumCNI(numCNI);
+        homelabUser.dateDeNaissance(dateDeNaissance);
+        homelabUser.setPhone(phone);
+        homelabUser.setAddressLine1(addressLine1);
+        homelabUser.addressLine2(addressLine2);
+        homelabUser.setCity(city);
+        homelabUser.setPays(pays);
+        homelabUserRepository.save(homelabUser);
         return newUser;
     }
 

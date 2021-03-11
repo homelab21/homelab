@@ -36,7 +36,8 @@
     "dtoSuffix": "DTO",
     "otherModules": [],
     "blueprints": [],
-    "prettierJava": true
+    "prettierJava": true,
+    "lastLiquibaseTimestamp": 1615485615000
   },
   "git-provider": "GitHub",
   "git-company": "homelab21",

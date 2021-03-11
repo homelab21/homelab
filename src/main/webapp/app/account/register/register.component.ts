@@ -19,6 +19,8 @@ export class RegisterComponent implements AfterViewInit {
   error = false;
   errorEmailExists = false;
   errorUserExists = false;
+  errorPhoneExists = false;
+  errorNumCNIExists = false;
   success = false;
 
   registerForm = this.fb.group({
@@ -34,6 +36,10 @@ export class RegisterComponent implements AfterViewInit {
     email: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(254), Validators.email]],
     password: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
     confirmPassword: ['', [Validators.required, Validators.minLength(4), Validators.maxLength(50)]],
+    numCNI: ['', [Validators.required, Validators.minLength(13), Validators.maxLength(13), Validators.pattern('[0-9]')]],
+    dateDeNaissance: [Validators.required],
+    city: ['', Validators.required],
+    pays: ['', Validators.required],
   });
 
   constructor(
@@ -53,6 +59,8 @@ export class RegisterComponent implements AfterViewInit {
     this.doNotMatch = false;
     this.error = false;
     this.errorEmailExists = false;
+    this.errorNumCNIExists = false;
+    this.errorPhoneExists = false;
     this.errorUserExists = false;
 
     const password = this.registerForm.get(['password'])!.value;
@@ -61,10 +69,29 @@ export class RegisterComponent implements AfterViewInit {
     } else {
       const login = this.registerForm.get(['login'])!.value;
       const email = this.registerForm.get(['email'])!.value;
-      this.registerService.save({ login, email, password, langKey: this.languageService.getCurrentLanguage() }).subscribe(
-        () => (this.success = true),
-        response => this.processError(response)
-      );
+      const numCNI = this.registerForm.get(['numCNI'])!.value;
+      const dateDeNaissance = this.registerForm.get(['dateDeNaissance'])!.value;
+      const addressLine1 = this.registerForm.get(['addressLine1'])!.value;
+      const addressLine2 = this.registerForm.get(['addressLine2'])!.value;
+      const city = this.registerForm.get(['city'])!.value;
+      const pays = this.registerForm.get(['pays'])!.value;
+      this.registerService
+        .save({
+          login,
+          email,
+          password,
+          numCNI,
+          dateDeNaissance,
+          addressLine1,
+          addressLine2,
+          city,
+          pays,
+          langKey: this.languageService.getCurrentLanguage(),
+        })
+        .subscribe(
+          () => (this.success = true),
+          response => this.processError(response)
+        );
     }
   }
 

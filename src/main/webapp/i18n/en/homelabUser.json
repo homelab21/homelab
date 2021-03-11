@@ -1,0 +1,29 @@
+{
+  "homelabApp": {
+    "homelabUser": {
+      "home": {
+        "title": "Homelab Users",
+        "createLabel": "Create a new Homelab User",
+        "createOrEditLabel": "Create or edit a Homelab User",
+        "notFound": "No Homelab Users found"
+      },
+      "created": "A new Homelab User is created with identifier {{ param }}",
+      "updated": "A Homelab User is updated with identifier {{ param }}",
+      "deleted": "A Homelab User is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Homelab User {{ id }}?"
+      },
+      "detail": {
+        "title": "Homelab User"
+      },
+      "numCNI": "Num CNI",
+      "dateDeNaissance": "Date De Naissance",
+      "addressLine1": "Address Line 1",
+      "addressLine2": "Address Line 2",
+      "city": "City",
+      "pays": "Pays",
+      "phone": "Phone",
+      "user": "User"
+    }
+  }
+}

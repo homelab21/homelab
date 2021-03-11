@@ -57,6 +57,11 @@ public class User extends AbstractAuditingEntity implements Serializable {
     private String email;
 
     @NotNull
+    @Column(name = "phone")
+    @Size(min = 9, max = 13)
+    private String phone;
+
+    @NotNull
     @Column(nullable = false)
     private boolean activated = false;
 
@@ -239,5 +244,13 @@ public class User extends AbstractAuditingEntity implements Serializable {
             ", langKey='" + langKey + '\'' +
             ", activationKey='" + activationKey + '\'' +
             "}";
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 }
